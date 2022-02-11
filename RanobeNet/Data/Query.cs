@@ -25,8 +25,8 @@ namespace RanobeNet.Data
         private int PageSize { get; }
         private QueryBuilder(int pageNumber, int pageSize)
         {
-            PageNumber = pageNumber;
-            PageSize = pageSize;
+            PageNumber = pageNumber <= 0 ? 1 : pageNumber;
+            PageSize = pageSize <= 0 ? 10 : pageSize;
         }
         public static QueryBuilder<T> create(int pageNumber, int pageSize)
         {
