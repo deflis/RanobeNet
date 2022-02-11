@@ -32,7 +32,7 @@ namespace RanobeNet.Data
             Items = items;
         }
     }
-    internal static class PagedListExtension
+    public static class PagedListExtension
     {
         public static PagedList<T> ToPagedList<T>(this IQueryable<T> source, Query<T> query)
         {
