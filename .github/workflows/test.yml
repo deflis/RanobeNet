@@ -31,3 +31,11 @@ jobs:
           path: TestResults
         # always() を使用して常にこのステップを実行し、テストが失敗したときにテスト結果を公開する
         if: ${{ always() }}
+      - name: Create swagger.json
+        run: dotnet swagger tofile --output ../swagger.json ./bin/Release/net6.0/RanobeNet.dll v1
+        working-directory: ./RanobeNet
+      - name: Upload swagger.json
+        uses: actions/upload-artifact@v2
+        with:
+          name: swagger
+          path: swagger.json

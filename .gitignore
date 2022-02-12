@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 firebase_credentials.json
+swagger.json
