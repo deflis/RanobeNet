@@ -31,6 +31,11 @@ jobs:
           path: TestResults
         # always() を使用して常にこのステップを実行し、テストが失敗したときにテスト結果を公開する
         if: ${{ always() }}
+      - name: Firebase credentials
+        env:
+          FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
+        run: |
+          echo "$FIREBASE_CREDENTIALS" > ./RanobeNet/firebase_credentials.json
       - name: Install tools
         run: dotnet tool restore
       - name: Create swagger.json
