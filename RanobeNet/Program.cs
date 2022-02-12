@@ -57,7 +57,7 @@ builder.Services.AddDbContext<RanobeNetContext>(options =>
         options.UseInMemoryDatabase(databaseName: "RanobeNet");
     }
 });
-builder.Services.AddFirebaseAuthentication(firebaseApp.Options.ProjectId ?? builder.Configuration["ProjectId"]);
+builder.Services.AddFirebaseAuthentication(firebaseApp.Options.ProjectId);
 
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
