@@ -9,8 +9,8 @@ namespace RanobeNet.Data.TypeConfiguration
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasIndex(x => x.FirebaseUid).IsUnique();
-            builder.Property(x => x.FirebaseUid).IsRequired();
-            builder.Property(x => x.Name).IsRequired();
+            builder.Property(x => x.FirebaseUid).IsRequired().HasMaxLength(128);
+            builder.Property(x => x.Name).HasMaxLength(100);
             builder.Property(x => x.CreatedAt).ValueGeneratedOnAdd();
             builder.Property(x => x.UpdatedAt).ValueGeneratedOnAddOrUpdate();
         }

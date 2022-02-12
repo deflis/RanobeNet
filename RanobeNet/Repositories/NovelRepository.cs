@@ -47,7 +47,7 @@ namespace RanobeNet.Repositories
                 }.Concat(novel.Chapters.OrderBy(x => x.Order).Select(chapter => new ChapterDtoForPublic
                 {
                     Type = ChapterType.Chapter,
-                    Title = chapter.Name,
+                    Title = chapter.Title,
                     Episodes = novel.Episodes.Where(x => x.ChapterId == chapter.Id).OrderBy(x => x.Order).Select(x => mapper.Map<EpisodeDtoForPublic>(x))
                 })),
             };

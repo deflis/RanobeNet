@@ -1,4 +1,5 @@
-﻿namespace RanobeNet.Models.Data
+﻿#nullable disable
+namespace RanobeNet.Models.Data
 {
     public class Novel
     {

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
+﻿#nullable disable
 namespace RanobeNet.Models.Data
 {
     public class Episode
