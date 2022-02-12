@@ -27,7 +27,7 @@ jobs:
       - name: Upload dotnet test results
         uses: actions/upload-artifact@v2
         with:
-          name: dotnet-results
+          name: TestResults
           path: TestResults
         # always() を使用して常にこのステップを実行し、テストが失敗したときにテスト結果を公開する
         if: ${{ always() }}
@@ -46,3 +46,10 @@ jobs:
         with:
           name: swagger
           path: swagger.json
+      - name: Publish
+        run: dotnet publish --configuration Release --no-build
+      - name: Upload RanobeNet Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: RanobeNet
+          path: ./RanobeNet/bin/Release/net6.0/publish/
