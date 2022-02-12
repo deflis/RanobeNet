@@ -31,7 +31,7 @@ jobs:
           path: TestResults
         # always() を使用して常にこのステップを実行し、テストが失敗したときにテスト結果を公開する
         if: ${{ always() }}
-      - name: Firebase credentials
+      - name: Create Firebase credentials
         env:
           FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
         run: |
@@ -46,6 +46,9 @@ jobs:
         with:
           name: swagger
           path: swagger.json
+      - name: Remove Firebase credentials
+        run: |
+          rm ./RanobeNet/firebase_credentials.json
       - name: Publish
         run: dotnet publish --configuration Release --no-build
       - name: Upload RanobeNet Build Artifact
