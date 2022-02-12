@@ -7,7 +7,7 @@ namespace RanobeNet.Repositories
     public interface IUserRepository
     {
         Task<UserDtoForPublic?> GetUser(long id);
-        Task<PagedList<UserDtoForPublicListing>> GetUsers(Query<User> query);
+        Task<PagedList<UserDtoForPublicListing>> GetUsers(Query<User> query, bool includesRomUser = false);
         Task<User?> ResolveUser(string firebaseUid);
         Task<UserDtoForMe> GetOrAddUserMe(string firebaseUid, Func<Task<string>> getName);
         Task<UserDtoForMe?> GetUserMe(string firebaseUid);

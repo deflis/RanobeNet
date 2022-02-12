@@ -23,9 +23,10 @@ namespace RanobeNet.Repositories
             return await context.Users.SingleOrDefaultAsync(x => x.FirebaseUid == firebaseUid);
         }
 
-        public async Task<PagedList<UserDtoForPublicListing>> GetUsers(Query<User> query)
+        public async Task<PagedList<UserDtoForPublicListing>> GetUsers(Query<User> query, bool includesRomUser = false)
         {
-            return await context.Users.ToPagedListAsync<User, UserDtoForPublicListing>(query, mapper);
+            var users = includesRomUser ? context.Users : context.Users.Where(x => x.Novels.Count > 0);
+            return await users.ToPagedListAsync<User, UserDtoForPublicListing>(query, mapper);
         }
 
         public async Task<UserDtoForPublic?> GetUser(long id)
