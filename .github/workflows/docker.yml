@@ -13,6 +13,7 @@ jobs:
     name: build and publish
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Create Firebase credentials
         env:
           FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
