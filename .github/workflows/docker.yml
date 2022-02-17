@@ -37,6 +37,7 @@ jobs:
           images: |
             ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}
           tags: |
+            latest
             type=sha
             type=ref,event=branch
             type=semver,pattern={{version}}
