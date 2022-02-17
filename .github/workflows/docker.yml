@@ -6,7 +6,6 @@ on:
 
 env:
   ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com
-  ECR_REPOSITORY: ranobenet
 
 jobs:
   build:
@@ -30,9 +29,9 @@ jobs:
         id: meta
         with:
           images: |
-            ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}
+            ranobenet/ranobenetapi
           tags: |
-            latest
+            type=sha
             type=ref,event=branch
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
