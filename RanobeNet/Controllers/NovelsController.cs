@@ -77,7 +77,7 @@ namespace RanobeNet.Controllers
         {
             try
             {
-                var firebaseUid = this.HttpContext.User.GetFirebaseUid();
+                var firebaseUid = this.HttpContext.GetFirebaseUid();
                 var novel = await novelRepository.GetNovelForMe(id, firebaseUid);
 
                 if (novel == null)
@@ -98,7 +98,7 @@ namespace RanobeNet.Controllers
         {
             try
             {
-                var firebaseUid = this.HttpContext.User.GetFirebaseUid();
+                var firebaseUid = this.HttpContext.GetFirebaseUid();
                 return await novelRepository.CreateNovel(firebaseUid, novel);
             }
             catch (Exception ex)
@@ -113,7 +113,7 @@ namespace RanobeNet.Controllers
         {
             try
             {
-                var firebaseUid = this.HttpContext.User.GetFirebaseUid();
+                var firebaseUid = this.HttpContext.GetFirebaseUid();
                 return await novelRepository.UpdateNovel(id, firebaseUid, novel);
             }
             catch (Exception ex)
@@ -128,7 +128,7 @@ namespace RanobeNet.Controllers
         {
             try
             {
-                var firebaseUid = this.HttpContext.User.GetFirebaseUid();
+                var firebaseUid = this.HttpContext.GetFirebaseUid();
                 await novelRepository.DeleteNovel(id, firebaseUid);
                 return Ok();
             }

@@ -50,7 +50,7 @@ builder.Services.AddDbContext<RanobeNetContext>(options =>
             .EnableDetailedErrors();
     }
 });
-builder.Services.AddFirebaseAuthentication(firebaseApp.Options.ProjectId);
+builder.Services.AddFirebaseAuthentication(o => o.FirebaseAuth = FirebaseAuth.GetAuth(firebaseApp));
 
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -58,7 +58,6 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<INovelRepository, NovelRepository>();
 builder.Services.Configure<RouteOptions>(options =>
 {
-    // URL ���������ɂ���
     options.LowercaseUrls = true;
 });
 

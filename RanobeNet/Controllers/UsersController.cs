@@ -65,7 +65,7 @@ namespace RanobeNet.Controllers
         [HttpGet("me")]
         public async Task<ActionResult<UserDtoForMe>> GetUserMe()
         {
-            var firebaseUid = this.HttpContext.User.GetFirebaseUid();
+            var firebaseUid = this.HttpContext.GetFirebaseUid();
             var user = await userRepository.GetUserMe(firebaseUid);
 
             if (user == null)
@@ -80,7 +80,7 @@ namespace RanobeNet.Controllers
         [HttpPost("me")]
         public async Task<ActionResult<UserDtoForMe>> GetOrUpdateUserMe()
         {
-            var firebaseUid = this.HttpContext.User.GetFirebaseUid();
+            var firebaseUid = this.HttpContext.GetFirebaseUid();
             var updatedUser = await userRepository.GetOrAddUserMe(firebaseUid, async () => (await firebaseAuth.GetUserAsync(firebaseUid)).DisplayName);
 
             if (updatedUser == null)
@@ -94,7 +94,8 @@ namespace RanobeNet.Controllers
         [HttpPut("me")]
         public async Task<ActionResult<UserDtoForMe>> UpdateUserMe(UserDtoForSave user)
         {
-            var firebaseUid = this.HttpContext.User.GetFirebaseUid();
+           
+            var firebaseUid = this.HttpContext.GetFirebaseUid();
             var updatedUser = await userRepository.UpdateUserMe(firebaseUid, user);
 
             if (updatedUser == null)

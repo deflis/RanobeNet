@@ -12,7 +12,7 @@ namespace RanobeNet.Controllers
 		[HttpGet("{id}/episodes/{episodeId}")]
 		public async Task<ActionResult<EpisodeDtoForMe>> GetEpisode(long id, long episodeId)
 		{
-			var firebaseUid = this.HttpContext.User.GetFirebaseUid();
+			var firebaseUid = this.HttpContext.GetFirebaseUid();
 			return await novelRepository.GetEpisode(id, episodeId, firebaseUid);
 		}
 
@@ -20,7 +20,7 @@ namespace RanobeNet.Controllers
 		[HttpPost("{id}/episodes")]
 		public async Task<ActionResult<EpisodeDtoForMe>> CreateEpisode(long id, EpisodeDtoForSave episode)
 		{
-			var firebaseUid = this.HttpContext.User.GetFirebaseUid();
+			var firebaseUid = this.HttpContext.GetFirebaseUid();
 			return await novelRepository.CreateEpisode(id, firebaseUid, episode);
 		}
 
@@ -28,7 +28,7 @@ namespace RanobeNet.Controllers
 		[HttpPut("{id}/episodes/{episodeId}")]
 		public async Task<ActionResult<EpisodeDtoForMe>> UpdateEpisode(long id, long episodeId, EpisodeDtoForSave episode)
 		{
-			var firebaseUid = this.HttpContext.User.GetFirebaseUid();
+			var firebaseUid = this.HttpContext.GetFirebaseUid();
 			return await novelRepository.UpdateEpisode(id, episodeId, firebaseUid, episode);
 		}
 
@@ -36,7 +36,7 @@ namespace RanobeNet.Controllers
 		[HttpDelete("{id}/episodes/{episodeId}")]
 		public async Task<ActionResult> DeleteEpisode(long id, long episodeId)
 		{
-			var firebaseUid = this.HttpContext.User.GetFirebaseUid();
+			var firebaseUid = this.HttpContext.GetFirebaseUid();
 			await novelRepository.DeleteEpisode(id, episodeId, firebaseUid);
 			return Ok();
 		}
