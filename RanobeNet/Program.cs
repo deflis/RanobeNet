@@ -41,20 +41,13 @@ builder.Services.AddDbContext<RanobeNetContext>(options =>
     options.UseLazyLoadingProxies();
     var serverVersion = new MySqlServerVersion(new Version(5, 7, 12));
     var connectionString = builder.Configuration.GetConnectionString("RanobeNetContext");
-    if (connectionString != "")
+    options.UseMySql(connectionString, serverVersion);
+    if (builder.Environment.IsDevelopment())
     {
-        options.UseMySql(connectionString, serverVersion);
-        if (builder.Environment.IsDevelopment())
-        {
-            options
-                .LogTo(Console.WriteLine, LogLevel.Information)
-                .EnableSensitiveDataLogging()
-                .EnableDetailedErrors();
-        }
-    }
-    else
-    {
-        options.UseInMemoryDatabase(databaseName: "RanobeNet");
+        options
+            .LogTo(Console.WriteLine, LogLevel.Information)
+            .EnableSensitiveDataLogging()
+            .EnableDetailedErrors();
     }
 });
 builder.Services.AddFirebaseAuthentication(firebaseApp.Options.ProjectId);
@@ -65,7 +58,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<INovelRepository, NovelRepository>();
 builder.Services.Configure<RouteOptions>(options =>
 {
-    // URL Çè¨ï∂éöÇ…Ç∑ÇÈ
+    // URL ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ…ÇÔøΩÔøΩÔøΩ
     options.LowercaseUrls = true;
 });
 
