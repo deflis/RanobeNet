@@ -106,7 +106,7 @@ namespace RanobeNet.Repositories
             if (novel.User.FirebaseUid != firebaseUid) throw new Exception();
             var rawEpisode = mapper.Map<Episode>(episode);
             rawEpisode.NovelId = novelId;
-            rawEpisode.Order = await context.Episodes.Where(x => x.NovelId == novel.Id).Select(x => x.Order + 1).DefaultIfEmpty(1).MaxAsync();
+            rawEpisode.Order = ((await context.Episodes.Where(x => x.NovelId == novel.Id).MaxAsync(x => (int?)x.Order)) ?? 0) + 1;
             rawEpisode.ChapterId = await context.Episodes.Where(x => x.NovelId == novel.Id).OrderByDescending(x => x.Order).Select(x => x.ChapterId).FirstOrDefaultAsync();
             context.Episodes.Add(rawEpisode);
             await context.SaveChangesAsync();
