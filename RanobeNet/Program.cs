@@ -28,6 +28,10 @@ builder.Services.AddCors(options =>
             builder.WithOrigins("http://localhost:3000")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
+            builder.WithOrigins("https://*.githubpreview.dev")
+                .SetIsOriginAllowedToAllowWildcardSubdomains()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
             builder.WithOrigins("http://*.ranobe.net", "https://*.ranobe.net", "http://ranobe.net", "https://ranobe.net")
                 .SetIsOriginAllowedToAllowWildcardSubdomains()
                 .AllowAnyHeader()
