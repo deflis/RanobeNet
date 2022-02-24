@@ -11,7 +11,7 @@ using RanobeNet.Controllers;
 using RanobeNet.Data;
 using RanobeNet.Repositories;
 using RanobeNet.Utils;
-
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,7 +56,10 @@ builder.Services.AddDbContext<RanobeNetContext>(options =>
 });
 builder.Services.AddFirebaseAuthentication(o => o.FirebaseAuth = FirebaseAuth.GetAuth(firebaseApp));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+}); ;
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<INovelRepository, NovelRepository>();
@@ -76,7 +79,7 @@ builder.Services.AddSwaggerGen(c =>
         Type = SecuritySchemeType.Http,
         Scheme = "bearer",
         BearerFormat = "JWT",
-        Description = "JWT Authorization header using the Bearer scheme."
+        Description = "FirebaseîFèÿÇ™ïKóv"
     });
     c.UseInlineDefinitionsForEnums();
     c.MapType<UserField>(() => new OpenApiSchema

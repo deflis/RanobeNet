@@ -13,6 +13,7 @@ namespace RanobeNet.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [Consumes("application/json")]
     [Produces("application/json")]
     public partial class UsersController : ControllerBase
     {
@@ -30,8 +31,8 @@ namespace RanobeNet.Controllers
         [HttpGet]
         public async Task<ActionResult<PagedList<UserDtoForPublicListing>>> GetUsers([FromQuery] GetUsersQueryParams queryParam)
         {
-            var builder = QueryBuilder<User>.create(queryParam.page, queryParam.size).SetDescending(queryParam.descending);
-            switch (queryParam.order)
+            var builder = QueryBuilder<User>.create(queryParam.page ?? 1, queryParam.size ?? 10).SetDescending(queryParam.descending ?? false);
+            switch (queryParam.order ?? UserField.id)
             {
                 case UserField.id:
                     builder.SetKeySelector(x => x.Id);
@@ -94,7 +95,6 @@ namespace RanobeNet.Controllers
         [HttpPut("me")]
         public async Task<ActionResult<UserDtoForMe>> UpdateUserMe(UserDtoForSave user)
         {
-           
             var firebaseUid = this.HttpContext.GetFirebaseUid();
             var updatedUser = await userRepository.UpdateUserMe(firebaseUid, user);
 

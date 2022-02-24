@@ -2,10 +2,8 @@
 
 namespace RanobeNet.Models.Dto
 {
-    public class UserDtoForMe
+    public class UserDtoForSave
     {
-        [Required]
-        public long Id { get; set; }
         [Required]
         public string Name { get; set; }
     }

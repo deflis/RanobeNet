@@ -11,6 +11,7 @@ namespace RanobeNet.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [Consumes("application/json")]
     [Produces("application/json")]
     public partial class NovelsController : ControllerBase
     {
@@ -28,8 +29,8 @@ namespace RanobeNet.Controllers
         {
             try
             {
-                var builder = QueryBuilder<Novel>.create(queryParam.page, queryParam.size).SetDescending(queryParam.descending);
-                switch (queryParam.order)
+                var builder = QueryBuilder<Novel>.create(queryParam.page ?? 1, queryParam.size ?? 10).SetDescending(queryParam.descending ?? false);
+                switch (queryParam.order ?? NovelField.id)
                 {
                     case NovelField.id:
                         builder.SetKeySelector(x => x.Id);

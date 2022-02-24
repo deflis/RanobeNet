@@ -13,6 +13,8 @@ namespace RanobeNet.Models.Dto
         [Required]
         public string Author { get; set; }
         [Required]
+        public long UserId { get; set; }
+        [Required]
         public IEnumerable<ChapterDtoForPublic> Chapters { get; set; }
     }
 }

@@ -27,6 +27,11 @@ namespace RanobeNet.Repositories
             return context.Novels.Where(x => x.UserId == userId).ToPagedListAsync<Novel, NovelDtoForPublicListing>(query, mapper);
         }
 
+        public Task<PagedList<NovelDtoForMe>> GetNovelsByMe(string firebaseUid, Query<Novel> query)
+        {
+            return context.Novels.Where(x => x.User.FirebaseUid == firebaseUid).ToPagedListAsync<Novel, NovelDtoForMe>(query, mapper);
+        }
+
         async public Task<NovelDtoForPublic?> GetNovel(long id)
         {
             var novel = await context.Novels.FindAsync(id);
@@ -38,6 +43,7 @@ namespace RanobeNet.Repositories
                 Title = novel.Title,
                 Description = novel.Description,
                 Author = novel.Author ?? novel.User.Name,
+                UserId = novel.UserId,
                 Chapters = new List<ChapterDtoForPublic>(){
                     new ChapterDtoForPublic
                     {

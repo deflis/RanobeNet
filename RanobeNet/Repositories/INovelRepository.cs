@@ -14,6 +14,7 @@ namespace RanobeNet.Repositories
         Task<NovelDtoForPublic?> GetNovel(long id);
         Task<NovelDtoForMe?> GetNovelForMe(long id, string firebaseUid);
         Task<PagedList<NovelDtoForPublicListing>> GetNovels(Query<Novel> query);
+        Task<PagedList<NovelDtoForMe>> GetNovelsByMe(string firebaseUid, Query<Novel> query);
         Task<PagedList<NovelDtoForPublicListing>> GetNovelsByUser(long userId, Query<Novel> query);
         Task<EpisodeDtoForMe> UpdateEpisode(long novelId, long episodeId, string firebaseUid, EpisodeDtoForSave episode);
         Task<NovelDtoForMe> UpdateNovel(long id, string firebaseUid, NovelDtoForSave novel);
