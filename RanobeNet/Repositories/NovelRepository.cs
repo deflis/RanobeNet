@@ -138,14 +138,6 @@ namespace RanobeNet.Repositories
             if (episode.Novel.Id != novelId) throw new Exception();
             if (episode.Novel.User.FirebaseUid != firebaseUid) throw new Exception();
             context.Episodes.Remove(episode);
-            await context.Episodes
-                    .Where(x => x.NovelId == novelId && x.Id != episodeId)
-                    .OrderBy(x => x.Order)
-                    .Zip(Enumerable.Range(1, int.MaxValue), (episode, order) => new { episode, order })
-                    .ForEachAsync(x =>
-                    {
-                        x.episode.Order = x.order;
-                    });
             await context.SaveChangesAsync();
 
         }
