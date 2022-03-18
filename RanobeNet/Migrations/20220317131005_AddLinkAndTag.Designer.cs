@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RanobeNet.Data;
 
@@ -10,9 +11,10 @@ using RanobeNet.Data;
 namespace RanobeNet.Migrations
 {
     [DbContext(typeof(RanobeNetContext))]
-    partial class RanobeNetContextModelSnapshot : ModelSnapshot
+    [Migration("20220317131005_AddLinkAndTag")]
+    partial class AddLinkAndTag
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,9 +72,6 @@ namespace RanobeNet.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Private")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<string>("Story")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -114,9 +113,6 @@ namespace RanobeNet.Migrations
                         .HasMaxLength(4000)
                         .HasColumnType("varchar(4000)");
 
-                    b.Property<bool>("Private")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -134,43 +130,6 @@ namespace RanobeNet.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Novels");
-                });
-
-            modelBuilder.Entity("RanobeNet.Models.Data.NovelAttribute", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext");
-
-                    b.Property<long?>("EpisodeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("NovelId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EpisodeId");
-
-                    b.HasIndex("NovelId");
-
-                    b.ToTable("NovelAttribute");
                 });
 
             modelBuilder.Entity("RanobeNet.Models.Data.NovelLink", b =>
@@ -234,9 +193,6 @@ namespace RanobeNet.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext");
-
                     b.Property<string>("FirebaseUid")
                         .IsRequired()
                         .HasMaxLength(128)
@@ -256,33 +212,6 @@ namespace RanobeNet.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("RanobeNet.Models.Data.UserLink", b =>
-                {
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Link")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("UserId", "Link");
-
-                    b.ToTable("UserLinks");
                 });
 
             modelBuilder.Entity("RanobeNet.Models.Data.Chapter", b =>
@@ -324,23 +253,6 @@ namespace RanobeNet.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("RanobeNet.Models.Data.NovelAttribute", b =>
-                {
-                    b.HasOne("RanobeNet.Models.Data.Episode", "Episode")
-                        .WithMany()
-                        .HasForeignKey("EpisodeId");
-
-                    b.HasOne("RanobeNet.Models.Data.Novel", "Novel")
-                        .WithMany("Attributes")
-                        .HasForeignKey("NovelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Episode");
-
-                    b.Navigation("Novel");
-                });
-
             modelBuilder.Entity("RanobeNet.Models.Data.NovelLink", b =>
                 {
                     b.HasOne("RanobeNet.Models.Data.Novel", "Novel")
@@ -363,17 +275,6 @@ namespace RanobeNet.Migrations
                     b.Navigation("Novel");
                 });
 
-            modelBuilder.Entity("RanobeNet.Models.Data.UserLink", b =>
-                {
-                    b.HasOne("RanobeNet.Models.Data.User", "User")
-                        .WithMany("Links")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("RanobeNet.Models.Data.Chapter", b =>
                 {
                     b.Navigation("Episodes");
@@ -381,8 +282,6 @@ namespace RanobeNet.Migrations
 
             modelBuilder.Entity("RanobeNet.Models.Data.Novel", b =>
                 {
-                    b.Navigation("Attributes");
-
                     b.Navigation("Chapters");
 
                     b.Navigation("Episodes");
@@ -394,8 +293,6 @@ namespace RanobeNet.Migrations
 
             modelBuilder.Entity("RanobeNet.Models.Data.User", b =>
                 {
-                    b.Navigation("Links");
-
                     b.Navigation("Novels");
                 });
 #pragma warning restore 612, 618

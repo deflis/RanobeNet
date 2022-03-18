@@ -14,10 +14,20 @@ namespace RanobeNet.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new UserLinkEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new NovelEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new NovelAttributeEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new NovelLinkEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new NovelTagEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ChapterEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new EpisodeEntityTypeConfiguration());
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<UserLink> UserLinks { get; set; }
         public DbSet<Novel> Novels { get; set; }
+        public DbSet<NovelLink> NovelLinks { get; set; }
+        public DbSet<NovelTag> NovelTags { get; set; }
         public DbSet<Episode> Episodes { get; set; }
         public DbSet<Chapter> Chapters { get; set; }
     }
