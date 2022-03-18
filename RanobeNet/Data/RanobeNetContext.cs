@@ -26,6 +26,7 @@ namespace RanobeNet.Data
         public DbSet<User> Users { get; set; }
         public DbSet<UserLink> UserLinks { get; set; }
         public DbSet<Novel> Novels { get; set; }
+        public DbSet<NovelAttribute> NovelAttributes { get; set; }
         public DbSet<NovelLink> NovelLinks { get; set; }
         public DbSet<NovelTag> NovelTags { get; set; }
         public DbSet<Episode> Episodes { get; set; }
