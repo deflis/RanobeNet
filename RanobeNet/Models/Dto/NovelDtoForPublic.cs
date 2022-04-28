@@ -16,5 +16,9 @@ namespace RanobeNet.Models.Dto
         public long UserId { get; set; }
         [Required]
         public IEnumerable<ChapterDtoForPublic> Chapters { get; set; }
+        [Required]
+        public IEnumerable<NovelLinkDto> Links { get; set; }
+        [Required]
+        public IEnumerable<NovelTagDto> Tags { get; set; }
     }
 }

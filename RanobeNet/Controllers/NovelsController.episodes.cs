@@ -8,12 +8,18 @@ namespace RanobeNet.Controllers
 {
     public partial class NovelsController
 	{
-		[Authorize]
 		[HttpGet("{id}/episodes/{episodeId}")]
-		public async Task<ActionResult<EpisodeDtoForMe>> GetEpisode(long id, long episodeId)
+		public async Task<ActionResult<EpisodeDtoForPublicParsed>> GetEpisode(long id, long episodeId)
+		{
+			return await novelRepository.GetEpisode(id, episodeId);
+		}
+
+		[Authorize]
+		[HttpGet("{id}/episodes/{episodeId}/me")]
+		public async Task<ActionResult<EpisodeDtoForMe>> GetEpisodeForMe(long id, long episodeId)
 		{
 			var firebaseUid = this.HttpContext.GetFirebaseUid();
-			return await novelRepository.GetEpisode(id, episodeId, firebaseUid);
+			return await novelRepository.GetEpisodeForMe(id, episodeId, firebaseUid);
 		}
 
 		[Authorize]

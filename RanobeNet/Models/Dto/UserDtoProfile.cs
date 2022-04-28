@@ -10,6 +10,8 @@ namespace RanobeNet.Models.Dto
             CreateMap<User, UserDtoForPublicListing>();
             CreateMap<User, UserDtoForMe>();
             CreateMap<UserDtoForSave, User>();
+            CreateMap<UserLink, UserLinkDto>();
+            CreateMap<UserLinkDto, UserLink>();
         }
     }
 }

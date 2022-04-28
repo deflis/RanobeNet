@@ -10,5 +10,7 @@ namespace RanobeNet.Models.Dto
         public string Name { get; set; }
         [Required]
         public List<NovelDtoForPublicListing> Novels { get; set; }
+        [Required]
+        public List<UserLinkDto> Links { get; set; }
     }
 }

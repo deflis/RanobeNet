@@ -9,5 +9,9 @@ namespace RanobeNet.Models.Dto
         [Required]
         public string Description { get; set; }
         public string? Author { get; set; }
+        [Required]
+        public IEnumerable<NovelLinkDto> Links { get; set; }
+        [Required]
+        public IEnumerable<NovelTagDto> Tags { get; set; }
     }
 }
