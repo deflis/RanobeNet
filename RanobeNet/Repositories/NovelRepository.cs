@@ -241,7 +241,7 @@ namespace RanobeNet.Repositories
                 Order = i + 1,
                 Id = x.EpisodeId,
                 ChapterId = x.ChapterId
-            });
+            }));
             foreach (var episode in novel.Episodes)
             {
                 var update = episodesWithIndex.Single(x => x.Id == episode.Id);
