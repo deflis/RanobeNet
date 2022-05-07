@@ -36,6 +36,7 @@ namespace RanobeNet.Repositories
         {
             var novel = await context.Novels.FindAsync(id);
             if (novel == null) return null;
+            var episodes = novel.Episodes.Where(x => !x.Private);
 
             return new NovelDtoForPublic
             {
@@ -48,14 +49,14 @@ namespace RanobeNet.Repositories
                     new ChapterDtoForPublic
                     {
                         Type = ChapterType.NonChapter,
-                        Episodes = novel.Episodes.Where(x => x.ChapterId == null).OrderBy(x => x.Order).Select(x => mapper.Map<EpisodeDtoForPublic>(x))
+                        Episodes = episodes.Where(x => x.ChapterId == null).OrderBy(x => x.Order).Select(x => mapper.Map<EpisodeDtoForPublic>(x))
                     }
-                }.Concat(novel.Chapters.OrderBy(x => x.Order).Where(chapter => chapter.Episodes.Count > 0).Select(chapter => new ChapterDtoForPublic
+                }.Concat(novel.Chapters.OrderBy(x => x.Order).Select(chapter => new ChapterDtoForPublic
                 {
                     Type = ChapterType.Chapter,
                     Title = chapter.Title,
-                    Episodes = novel.Episodes.Where(x => x.ChapterId == chapter.Id).OrderBy(x => x.Order).Select(x => mapper.Map<EpisodeDtoForPublic>(x))
-                })),
+                    Episodes = episodes.Where(x => x.ChapterId == chapter.Id).OrderBy(x => x.Order).Select(x => mapper.Map<EpisodeDtoForPublic>(x))
+                })).Where(x => x.Episodes.Count() != 0),
                 Links = novel.Links.Select(x => mapper.Map<NovelLinkDto>(x)),
                 Tags = novel.Tags.Select(x => mapper.Map<NovelTagDto>(x))
             };
