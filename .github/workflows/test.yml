@@ -57,7 +57,10 @@ jobs:
           name: RanobeNet
           path: ./RanobeNet/bin/Release/net6.0/publish/
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: "marvinpinto/action-automatic-releases@latest"
         if: github.ref == 'refs/heads/master'
         with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
           files: swagger.json
