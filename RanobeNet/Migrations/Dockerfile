@@ -19,5 +19,7 @@ RUN dotnet ef migrations bundle --configuration Release -o /app/publish/efbundle
 
 FROM base AS final
 WORKDIR /app
+COPY RanobeNet/firebase_credentials.json .
+COPY RanobeNet/appsettings.json .
 COPY --from=publish /app/publish .
 ENTRYPOINT ["./efbundle.exe"]
