@@ -14,7 +14,7 @@ RUN dotnet build "RanobeNet.csproj" -c Release -o /app/build
 FROM build AS publish
 COPY [".config/dotnet-tools.json", "."]
 RUN dotnet tool restore
-RUN dotnet ef migrations bundle --no-build -c Release -o /app/publish
+RUN dotnet ef migrations bundle --no-build --configuration Release --output /app/publish/efbundle.exe
 
 FROM base AS final
 WORKDIR /app
