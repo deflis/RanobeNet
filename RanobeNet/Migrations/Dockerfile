@@ -15,7 +15,7 @@ FROM build AS publish
 COPY [".config/dotnet-tools.json", "."]
 RUN dotnet tool restore
 RUN mkdir -p /app/publish
-RUN dotnet ef migrations bundle --configuration Release --output /app/publish/efbundle.exe
+RUN dotnet ef migrations bundle -c Release -o /app/publish/efbundle.exe --no-build
 
 FROM base AS final
 WORKDIR /app
