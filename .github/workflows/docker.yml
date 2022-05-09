@@ -57,7 +57,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - uses: docker/metadata-action@v3
-        id: meta
+        id: migration-meta
         with:
           images: |
             ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY_MIGRATION }}
@@ -75,7 +75,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           file: ./RanobeNet/Migrations/Dockerfile
           platforms: linux/amd64,linux/arm64
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.migration-meta.outputs.tags }}
+          labels: ${{ steps.migration-meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
