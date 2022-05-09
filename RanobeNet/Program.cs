@@ -79,7 +79,7 @@ builder.Services.AddSwaggerGen(c =>
         Type = SecuritySchemeType.Http,
         Scheme = "bearer",
         BearerFormat = "JWT",
-        Description = "Firebase”FØ‚ª•K—v"
+        Description = "Firebaseï¿½Fï¿½Ø‚ï¿½ï¿½Kï¿½v"
     });
     c.UseInlineDefinitionsForEnums();
     c.MapType<UserField>(() => new OpenApiSchema
@@ -117,5 +117,7 @@ app.UseAuthorization();
 app.UseCors();
 
 app.MapControllers();
+app.MapHealthChecks("/");
+app.MapHealthChecks("/health");
 
 app.Run();
