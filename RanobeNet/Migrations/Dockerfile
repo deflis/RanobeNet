@@ -20,4 +20,4 @@ RUN dotnet ef migrations bundle --configuration Release -o /app/publish/efbundle
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["efbundle.exe"]
+ENTRYPOINT ["./efbundle.exe"]
