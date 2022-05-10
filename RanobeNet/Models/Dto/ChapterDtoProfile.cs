@@ -7,7 +7,8 @@ namespace RanobeNet.Models.Dto
     {
         public ChapterDtoProfile()
         {
-            CreateMap<Chapter, ChapterDtoForPublic>().ForMember(x => x.Episodes, opt => opt.MapFrom((src) => src.Episodes.OrderBy(x =>x.Order)));
+            CreateMap<Chapter, ChapterDtoForPublic>().ForMember(x => x.Episodes, opt => opt.MapFrom((src) => src.Episodes.OrderBy(x => x.Order)));
+            CreateMap<Chapter, ChapterDtoForMeList>().ForMember(x => x.Episodes, opt => opt.MapFrom((src) => src.Episodes.OrderBy(x => x.Order)));
         }
     }
 }

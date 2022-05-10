@@ -2,7 +2,7 @@
 
 namespace RanobeNet.Models.Dto
 {
-    public class ChaptersDto
+    public class ChaptersDtoForMe
     {
         [Required]
         public IEnumerable<Chapter> Chapters { get; set; }
@@ -21,6 +21,10 @@ namespace RanobeNet.Models.Dto
         {
             [Required]
             public long Id { get; set; }
+            [Required]
+            public string Title { get; set; }
+            [Required]
+            public bool Private { get; set; }
         }
 
     }

@@ -172,39 +172,42 @@ namespace RanobeNet.Repositories
             await context.SaveChangesAsync();
         }
 
-        async public Task<ChaptersDto> GetChapters(long id, string firebaseUid)
+        async public Task<ChaptersDtoForMe> GetChapters(long id, string firebaseUid)
         {
             var novel = await context.Novels.FindAsync(id);
-            if (novel == null) return null;
-            if (novel.User.FirebaseUid != firebaseUid) throw new Exception();
+            if (novel == null || novel.User.FirebaseUid != firebaseUid) throw new Exception();
 
-            return new ChaptersDto()
+            return new ChaptersDtoForMe()
             {
-                Chapters = new List<ChaptersDto.Chapter> {
-                    new ChaptersDto.Chapter
+                Chapters = new List<ChaptersDtoForMe.Chapter> {
+                    new ChaptersDtoForMe.Chapter
                     {
                         Type = ChapterType.NonChapter,
-                        Episodes = novel.Episodes.Where(x => x.ChapterId == null).OrderBy(x => x.Order).Select(x => new ChaptersDto.Episode
+                        Episodes = novel.Episodes.Where(x => x.ChapterId == null).OrderBy(x => x.Order).Select(x => new ChaptersDtoForMe.Episode
                         {
                             Id = x.Id,
+                            Title = x.Title,
+                            Private = x.Private,
                         })
                     }
                 }.Concat(novel.Chapters.OrderBy(x => x.Order).Where(chapter => chapter.Episodes.Count > 0).Select(chapter =>
-                new ChaptersDto.Chapter
+                new ChaptersDtoForMe.Chapter
                 {
                     Id = chapter.Id,
                     Type = ChapterType.Chapter,
                     Title = chapter.Title,
-                    Episodes = novel.Episodes.Where(x => x.ChapterId == chapter.Id).OrderBy(x => x.Order).Select(x => new ChaptersDto.Episode
+                    Episodes = novel.Episodes.Where(x => x.ChapterId == chapter.Id).OrderBy(x => x.Order).Select(x => new ChaptersDtoForMe.Episode
                     {
                         Id = x.Id,
+                        Title = x.Title,
+                        Private = x.Private,
                     }),
                 }))
 
             };
         }
 
-        async public Task UpdateChapters(long id, string firebaseUid, ChaptersDto chapters)
+        async public Task UpdateChapters(long id, string firebaseUid, ChaptersDtoForSave chapters)
         {
             var novel = await context.Novels.FindAsync(id);
             if (novel == null || novel.User.FirebaseUid != firebaseUid) throw new Exception();

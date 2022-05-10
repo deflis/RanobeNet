@@ -10,6 +10,7 @@ namespace RanobeNet.Models.Dto
         {
             CreateMap<Episode, EpisodeDtoForPublic>();
             CreateMap<Episode, EpisodeDtoForMe>();
+            CreateMap<Episode, EpisodeDtoForMeList>();
             CreateMap<EpisodeDtoForSave, Episode>();
             var parser = new Parser();
             CreateMap<Episode, EpisodeDtoForPublicParsed>().ForMember(to => to.Story, x => x.MapFrom(from => parser.parse(from.Story)));

@@ -10,7 +10,7 @@ namespace RanobeNet.Controllers
     {
         [Authorize]
         [HttpGet("{id}/chapters")]
-        public async Task<ActionResult<ChaptersDto>> GetChapters(long id)
+        public async Task<ActionResult<ChaptersDtoForMe>> GetChapters(long id)
         {
             var firebaseUid = this.HttpContext.GetFirebaseUid();
             return await novelRepository.GetChapters(id, firebaseUid);
@@ -18,7 +18,7 @@ namespace RanobeNet.Controllers
 
         [Authorize]
         [HttpPost("{id}/chapters")]
-        public async Task<ActionResult> UpdateChapters(long id, ChaptersDto chapters)
+        public async Task<ActionResult> UpdateChapters(long id, ChaptersDtoForSave chapters)
         {
             var firebaseUid = this.HttpContext.GetFirebaseUid();
             await novelRepository.UpdateChapters(id, firebaseUid, chapters);
