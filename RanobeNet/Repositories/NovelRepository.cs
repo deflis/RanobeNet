@@ -179,11 +179,11 @@ namespace RanobeNet.Repositories
 
             return new ChaptersDtoForMe()
             {
-                Chapters = new List<ChaptersDtoForMe.Chapter> {
-                    new ChaptersDtoForMe.Chapter
+                Chapters = new List<ChaptersDtoForMe.ChaptersChapterForMe> {
+                    new ChaptersDtoForMe.ChaptersChapterForMe
                     {
                         Type = ChapterType.NonChapter,
-                        Episodes = novel.Episodes.Where(x => x.ChapterId == null).OrderBy(x => x.Order).Select(x => new ChaptersDtoForMe.Episode
+                        Episodes = novel.Episodes.Where(x => x.ChapterId == null).OrderBy(x => x.Order).Select(x => new ChaptersDtoForMe.ChaptersEpisodeForMe
                         {
                             Id = x.Id,
                             Title = x.Title,
@@ -191,12 +191,12 @@ namespace RanobeNet.Repositories
                         })
                     }
                 }.Concat(novel.Chapters.OrderBy(x => x.Order).Where(chapter => chapter.Episodes.Count > 0).Select(chapter =>
-                new ChaptersDtoForMe.Chapter
+                new ChaptersDtoForMe.ChaptersChapterForMe
                 {
                     Id = chapter.Id,
                     Type = ChapterType.Chapter,
                     Title = chapter.Title,
-                    Episodes = novel.Episodes.Where(x => x.ChapterId == chapter.Id).OrderBy(x => x.Order).Select(x => new ChaptersDtoForMe.Episode
+                    Episodes = novel.Episodes.Where(x => x.ChapterId == chapter.Id).OrderBy(x => x.Order).Select(x => new ChaptersDtoForMe.ChaptersEpisodeForMe
                     {
                         Id = x.Id,
                         Title = x.Title,

@@ -5,19 +5,19 @@ namespace RanobeNet.Models.Dto
     public class ChaptersDtoForSave
     {
         [Required]
-        public IEnumerable<Chapter> Chapters { get; set; }
+        public IEnumerable<ChaptersChapterForSave> Chapters { get; set; }
 
-        public class Chapter
+        public class ChaptersChapterForSave
         {
             public long? Id { get; set; }
             [Required]
             public ChapterType Type { get; set; }
             public string? Title { get; set; }
             [Required]
-            public IEnumerable<Episode> Episodes { get; set; }
+            public IEnumerable<ChaptersEpisodeForSave> Episodes { get; set; }
         }
 
-        public class Episode
+        public class ChaptersEpisodeForSave
         {
             [Required]
             public long Id { get; set; }
