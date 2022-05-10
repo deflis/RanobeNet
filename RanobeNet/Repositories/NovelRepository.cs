@@ -77,6 +77,7 @@ namespace RanobeNet.Repositories
             rawNovel.UserId = userId;
             rawNovel.Links = novel.Links.Select(x => mapper.Map<NovelLink>(x)).ToList();
             rawNovel.Tags = novel.Tags.Select(x => mapper.Map<NovelTag>(x)).ToList();
+            rawNovel.Private = novel.Private;
             await context.AddAsync(rawNovel);
             await context.AddRangeAsync(novel.Links.Select(x => new NovelLink
             {
@@ -103,6 +104,7 @@ namespace RanobeNet.Repositories
             rawNovel.Author = novel.Author;
             rawNovel.Links = novel.Links.Select(x => mapper.Map<NovelLink>(x)).ToList();
             rawNovel.Tags = novel.Tags.Select(x => mapper.Map<NovelTag>(x)).ToList();
+            rawNovel.Private = novel.Private;
             await context.SaveChangesAsync();
             return mapper.Map<NovelDtoForMe>(rawNovel);
         }
