@@ -18,7 +18,5 @@ namespace RanobeNet.Models.Dto
         public IEnumerable<NovelLinkDto> Links { get; set; }
         [Required]
         public IEnumerable<NovelTagDto> Tags { get; set; }
-        [Required]
-        public IEnumerable<ChapterDtoForMeList> Chapters { get; set; }
     }
 }
