@@ -7,6 +7,7 @@ namespace RanobeNet.Models.Dto
     {
         public NovelDtoProfile()
         {
+            CreateMap<Novel, NovelDtoForMe>();
             CreateMap<Novel, NovelDtoForPublicListing>().ForMember(dest => dest.Author, src => src.MapFrom(x => x.Author ?? x.User.Name));
             CreateMap<NovelDtoForSave, Novel>();
             CreateMap<NovelLink, NovelLinkDto>();
