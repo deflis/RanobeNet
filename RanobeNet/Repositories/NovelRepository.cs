@@ -19,12 +19,12 @@ namespace RanobeNet.Repositories
 
         public Task<PagedList<NovelDtoForPublicListing>> GetNovels(Query<Novel> query)
         {
-            return context.Novels.ToPagedListAsync<Novel, NovelDtoForPublicListing>(query, mapper);
+            return context.Novels.Where(x => !x.Private).ToPagedListAsync<Novel, NovelDtoForPublicListing>(query, mapper);
         }
 
         public Task<PagedList<NovelDtoForPublicListing>> GetNovelsByUser(long userId, Query<Novel> query)
         {
-            return context.Novels.Where(x => x.UserId == userId).ToPagedListAsync<Novel, NovelDtoForPublicListing>(query, mapper);
+            return context.Novels.Where(x => x.UserId == userId && !x.Private).ToPagedListAsync<Novel, NovelDtoForPublicListing>(query, mapper);
         }
 
         public Task<PagedList<NovelDtoForMe>> GetNovelsByMe(string firebaseUid, Query<Novel> query)
@@ -35,7 +35,7 @@ namespace RanobeNet.Repositories
         async public Task<NovelDtoForPublic?> GetNovel(long id)
         {
             var novel = await context.Novels.FindAsync(id);
-            if (novel == null) return null;
+            if (novel == null || novel.Private) return null;
             var episodes = novel.Episodes.Where(x => !x.Private);
 
             return new NovelDtoForPublic
@@ -121,7 +121,7 @@ namespace RanobeNet.Repositories
         {
             var episode = await context.Episodes.FindAsync(episodeId);
             if (episode == null) throw new Exception();
-            if (episode.Novel.Id != novelId) throw new Exception();
+            if (episode.Novel.Id != novelId || episode.Private || episode.Novel.Private) throw new Exception();
             return mapper.Map<EpisodeDtoForPublicParsed>(episode);
         }
 
@@ -143,6 +143,7 @@ namespace RanobeNet.Repositories
             rawEpisode.NovelId = novelId;
             rawEpisode.Order = ((await context.Episodes.Where(x => x.NovelId == novel.Id).MaxAsync(x => (int?)x.Order)) ?? 0) + 1;
             rawEpisode.ChapterId = await context.Episodes.Where(x => x.NovelId == novel.Id).OrderByDescending(x => x.Order).Select(x => x.ChapterId).FirstOrDefaultAsync();
+            rawEpisode.Private = episode.Private;
             context.Episodes.Add(rawEpisode);
             await context.SaveChangesAsync();
             return mapper.Map<EpisodeDtoForMe>(rawEpisode);
@@ -156,6 +157,7 @@ namespace RanobeNet.Repositories
             if (rawEpisode.Novel.User.FirebaseUid != firebaseUid) throw new Exception();
             rawEpisode.Title = episode.Title;
             rawEpisode.Story = episode.Story;
+            rawEpisode.Private = episode.Private;
             await context.SaveChangesAsync();
             return mapper.Map<EpisodeDtoForMe>(rawEpisode);
         }
